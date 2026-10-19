@@ -1,0 +1,57 @@
+@use 'tokens' as *;
+@use 'mixins' as *;
+
+.admin {
+  display: grid;
+  gap: $space * 2;
+  padding: $space * 3;
+  background: var(--surface);
+  border: 1px dashed var(--line);
+  border-radius: $radius;
+
+  h2 {
+    margin: 0;
+    font-size: 1.1rem;
+  }
+
+  &__form {
+    display: grid;
+    gap: $space * 1.5;
+
+    @include from($breakpoint-sm) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    label {
+      display: grid;
+      gap: $space * 0.5;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    input,
+    select {
+      width: 100%;
+      font: inherit;
+      color: var(--ink);
+      background: var(--bg);
+      padding: $space;
+      border: 1px solid var(--line);
+      border-radius: $space;
+
+      &:focus-visible {
+        @include focus-ring;
+      }
+    }
+
+    input[lang='ar'] {
+      font-family: $font-arabic;
+      font-size: 1.3rem;
+    }
+  }
+
+  &__message {
+    margin: 0;
+    color: var(--muted);
+  }
+}

@@ -1,0 +1,110 @@
+@use 'sass:color';
+@use 'tokens' as *;
+@use 'mixins' as *;
+
+.flashcard-area {
+  display: grid;
+  gap: $space * 2;
+}
+
+.flashcard {
+  // The card is a real <button> so keyboards and screen readers can use it.
+  // These lines remove the browser's default button look.
+  all: unset;
+  display: block;
+  width: 100%;
+  max-width: $card-max-width;
+  height: $card-height;
+  margin-inline: auto;
+  perspective: 1000px; // gives the flip its 3D depth
+  cursor: pointer;
+
+  &:focus-visible {
+    @include focus-ring;
+    border-radius: $radius;
+  }
+
+  &__inner {
+    position: relative;
+    display: block;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease;
+  }
+
+  &.is-flipped &__inner {
+    transform: rotateY(180deg);
+  }
+
+  &__face {
+    @include card-face;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  }
+
+  &__face--back {
+    transform: rotateY(180deg);
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+
+  &__arabic {
+    font-family: $font-arabic;
+    font-size: 2.8rem;
+    line-height: 1.7;
+    text-align: center;
+
+    @include from($breakpoint-sm) {
+      font-size: 3.5rem;
+    }
+  }
+
+  &__hint {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  &__translit {
+    font-size: 1.3rem;
+    font-style: italic;
+  }
+
+  &__meaning {
+    font-size: 1.7rem;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &__inner {
+      transition: none;
+    }
+  }
+}
+
+.badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 2px ($space * 1.25);
+  border-radius: 999px;
+
+  &--fusha {
+    background: rgba($gold, 0.18);
+    color: color.adjust($gold, $lightness: -18%);
+  }
+
+  &--ammiyeh {
+    background: rgba($teal, 0.12);
+    color: $teal;
+  }
+}
+
+.flashcard-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: $space;
+}

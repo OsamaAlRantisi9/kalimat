@@ -1,0 +1,27 @@
+@use 'tokens' as *;
+
+// Mobile first: the styles inside apply from this width and up.
+@mixin from($width) {
+  @media (min-width: $width) {
+    @content;
+  }
+}
+
+@mixin focus-ring {
+  outline: 3px solid $gold;
+  outline-offset: 3px;
+}
+
+// Shared layout for both sides of the flashcard.
+@mixin card-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $space;
+  padding: $space * 3;
+  border-radius: $radius;
+  backface-visibility: hidden;
+}

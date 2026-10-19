@@ -1,0 +1,148 @@
+@use 'tokens' as *;
+@use 'mixins' as *;
+
+// Colors that change between light and dark mode live in CSS variables,
+// because SASS variables disappear after the build and cannot react to the user's theme.
+:root {
+  --bg: #f7f5ef;
+  --surface: #ffffff;
+  --ink: #1d2422;
+  --muted: #5f6b67;
+  --line: #e2ded3;
+  --accent: #{$teal};
+  --on-accent: #ffffff;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1514;
+    --surface: #17201e;
+    --ink: #e6ece9;
+    --muted: #9aa9a4;
+    --line: #2a3533;
+    --accent: #{$teal-light};
+    --on-accent: #0f1514;
+    color-scheme: dark;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: $font-ui;
+  line-height: 1.5;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.app {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: ($space * 3) ($space * 2) ($space * 6);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr); // a wide child can't stretch the page past the screen
+  gap: $space * 3;
+}
+
+.app-header {
+  text-align: center;
+
+  h1 {
+    margin: 0;
+    font-size: 2rem;
+  }
+
+  .brand-ar {
+    font-family: $font-arabic;
+    color: $gold;
+  }
+
+  .tagline {
+    margin: 0;
+    color: var(--muted);
+  }
+}
+
+.study {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: $space * 3;
+}
+
+.stats {
+  margin: 0;
+  text-align: center;
+  color: var(--muted);
+}
+
+.panel {
+  margin: 0;
+  padding: $space * 3;
+  text-align: center;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: $radius;
+}
+
+.warning {
+  margin: 0;
+  padding: $space * 1.5;
+  border-radius: $space;
+  background: rgba($red, 0.12);
+  color: $red;
+  text-align: center;
+}
+
+.btn {
+  font: inherit;
+  font-weight: 600;
+  padding: ($space * 1.25) ($space * 2.5);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  cursor: pointer;
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  &--good {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+
+  &--again {
+    background: transparent;
+    border-color: $red;
+    color: $red;
+  }
+
+  &--ghost {
+    background: transparent;
+    border-color: var(--line);
+    color: var(--ink);
+  }
+
+  kbd {
+    margin-inline-start: $space * 0.5;
+    font-size: 0.75em;
+    opacity: 0.7;
+  }
+}
+
+.learner-id {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}

@@ -1,0 +1,48 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    // A user is an admin if a document with their uid exists in /admins.
+    // Admin documents are added by hand in the Firebase console, never from the app.
+    function isAdmin() {
+      return signedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    function validWord(word) {
+      return word.keys().hasOnly(['ar', 'translit', 'en', 'dialect', 'createdAt'])
+        && word.ar is string && word.ar.size() > 0 && word.ar.size() <= 60
+        && word.translit is string && word.translit.size() <= 60
+        && word.en is string && word.en.size() > 0 && word.en.size() <= 80
+        && word.dialect in ['fusha', 'ammiyeh']
+        && word.createdAt == request.time;
+    }
+
+    function validProgress(progress) {
+      return progress.keys().hasOnly(['box', 'due', 'updatedAt'])
+        && progress.box is int && progress.box >= 1 && progress.box <= 5
+        && progress.due is int
+        && progress.updatedAt == request.time;
+    }
+
+    match /words/{wordId} {
+      allow read: if true;
+      allow create, update: if isAdmin() && validWord(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    match /admins/{uid} {
+      allow read: if signedIn() && request.auth.uid == uid;
+      allow write: if false;
+    }
+
+    match /users/{uid}/progress/{wordId} {
+      allow read, delete: if signedIn() && request.auth.uid == uid;
+      allow create, update: if signedIn() && request.auth.uid == uid && validProgress(request.resource.data);
+    }
+  }
+}
