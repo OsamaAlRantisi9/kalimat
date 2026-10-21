@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use 'tokens' as *;
 @use 'mixins' as *;
 
@@ -11,19 +12,36 @@
   --line: #e2ded3;
   --accent: #{$teal};
   --on-accent: #ffffff;
+  --danger: #{$red};
+  --fusha: #{color.adjust($gold, $lightness: -18%)};
+  --ammiyeh: #{$teal};
   color-scheme: light;
 }
 
+// Lighter text colors keep enough contrast on the dark surfaces.
+@mixin dark-colors {
+  --bg: #0f1514;
+  --surface: #17201e;
+  --ink: #e6ece9;
+  --muted: #9aa9a4;
+  --line: #2a3533;
+  --accent: #{$teal-light};
+  --on-accent: #0f1514;
+  --danger: #f08a73;
+  --fusha: #{$gold};
+  --ammiyeh: #{$teal-light};
+  color-scheme: dark;
+}
+
+// Dark mode has two triggers: the learner picked it with the toggle (data-theme on <html>),
+// or the device is dark and the learner hasn't picked light.
+:root[data-theme='dark'] {
+  @include dark-colors;
+}
+
 @media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0f1514;
-    --surface: #17201e;
-    --ink: #e6ece9;
-    --muted: #9aa9a4;
-    --line: #2a3533;
-    --accent: #{$teal-light};
-    --on-accent: #0f1514;
-    color-scheme: dark;
+  :root:not([data-theme='light']) {
+    @include dark-colors;
   }
 }
 
@@ -51,6 +69,7 @@ body {
 }
 
 .app-header {
+  display: grid;
   text-align: center;
 
   h1 {
@@ -95,7 +114,7 @@ body {
   padding: $space * 1.5;
   border-radius: $space;
   background: rgba($red, 0.12);
-  color: $red;
+  color: var(--danger);
   text-align: center;
 }
 
@@ -123,8 +142,8 @@ body {
 
   &--again {
     background: transparent;
-    border-color: $red;
-    color: $red;
+    border-color: var(--danger);
+    color: var(--danger);
   }
 
   &--ghost {
@@ -137,6 +156,26 @@ body {
     margin-inline-start: $space * 0.5;
     font-size: 0.75em;
     opacity: 0.7;
+  }
+}
+
+.theme-toggle {
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: $space;
+  margin-bottom: $space;
+  padding: ($space * 0.75) ($space * 1.5);
+  font-size: 0.9rem;
+
+  svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 }
 

@@ -9,6 +9,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans:wght@400;600&display=swap" />
+    <script>
+      // Apply the learner's saved theme before the first paint, so the page never flashes the wrong colors.
+      // src/hooks/useTheme.js reads and writes the same key.
+      try {
+        const saved = localStorage.getItem('kalimat-theme');
+        if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
+      } catch {}
+    </script>
   </head>
   <body>
     <div id="root"></div>

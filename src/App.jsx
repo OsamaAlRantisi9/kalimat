@@ -5,11 +5,13 @@ import { fetchProgress, fetchWords, isAdmin, saveProgress } from './data/wordsAp
 import { buildQueue, nextReview } from './srs.js';
 import Flashcard from './components/Flashcard.jsx';
 import AdminPanel from './components/AdminPanel.jsx';
+import ThemeToggle from './components/ThemeToggle.jsx';
 
 export default function App() {
   return (
     <div className="app">
       <header className="app-header">
+        <ThemeToggle />
         <h1>
           Kalimat <span className="brand-ar" lang="ar">كلمات</span>
         </h1>

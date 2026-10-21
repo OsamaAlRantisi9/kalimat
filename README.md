@@ -14,7 +14,8 @@ Built with **React**, **Vite**, **SASS** and **Firebase** (Authentication, Cloud
 - Keyboard support: Space flips the card, 1 = again, 2 = got it.
 - Anonymous sign-in, so each learner's progress is saved without a sign-up form.
 - An admin panel to add words or import a starter set, protected by Firestore security rules.
-- Mobile first, light and dark mode, and reduced-motion support.
+- Mobile first, with reduced-motion support.
+- Light and dark mode: follows the device until the learner picks one with the toggle, then remembers the pick (`src/hooks/useTheme.js`).
 
 ## How it works
 
