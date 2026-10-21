@@ -13,6 +13,7 @@ Built with **React**, **Vite**, **SASS** and **Firebase** (Authentication, Cloud
 - Pronunciation is **switched off on purpose**. Browser voices read Arabic with the wrong vowels, which is worse than no audio for a learner. The code is kept behind a feature flag (`VITE_PRONUNCIATION=on`); the real fix is recordings by teachers saved with each word.
 - Keyboard support: Space flips the card, 1 = again, 2 = got it.
 - Anonymous sign-in, so each learner's progress is saved without a sign-up form.
+- Start over: when the day's cards are done, a learner can delete their progress in one batch and study every word again.
 - An admin panel to add words or import a starter set, protected by Firestore security rules.
 - Mobile first, with reduced-motion support.
 - Light and dark mode: follows the device until the learner picks one with the toggle, then remembers the pick (`src/hooks/useTheme.js`).

@@ -62,3 +62,11 @@ export function importStarterWords(words) {
   }
   return batch.commit();
 }
+
+// Deletes all of one learner's progress in one batch, so every word is new again.
+export async function resetProgress(uid) {
+  const snapshot = await getDocs(collection(db, 'users', uid, 'progress'));
+  const batch = writeBatch(db);
+  snapshot.forEach((d) => batch.delete(d.ref));
+  return batch.commit();
+}

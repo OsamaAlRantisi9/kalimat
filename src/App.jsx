@@ -6,6 +6,7 @@ import { buildQueue, nextReview } from './srs.js';
 import Flashcard from './components/Flashcard.jsx';
 import AdminPanel from './components/AdminPanel.jsx';
 import ThemeToggle from './components/ThemeToggle.jsx';
+import StartOver from './components/StartOver.jsx';
 
 export default function App() {
   return (
@@ -105,7 +106,16 @@ function Study() {
           {words.length === 0 ? (
             <p>No words yet.{admin && ' Import the starter words below.'}</p>
           ) : (
-            <p>All done for today. Come back tomorrow for your next reviews.</p>
+            <>
+              <p>All done for today. Come back tomorrow for your next reviews.</p>
+              <StartOver
+                uid={user.uid}
+                onDone={() => {
+                  setReviewed(0);
+                  load(user.uid);
+                }}
+              />
+            </>
           )}
         </div>
       )}
