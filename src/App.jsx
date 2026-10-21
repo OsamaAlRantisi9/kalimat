@@ -33,10 +33,10 @@ function Study() {
   const [reviewed, setReviewed] = useState(0);
   const [saveFailed, setSaveFailed] = useState(false);
 
-  const load = useCallback(async (uid) => {
-    setStatus((current) => (current === 'ready' ? current : 'loading'));
+  const load = useCallback(async (uid) => { // same function every render, so the effect below does not loop
+    setStatus((current) => (current === 'ready' ? current : 'loading')); // only the first load shows Loading
     try {
-      const [allWords, myProgress, adminFlag] = await Promise.all([
+      const [allWords, myProgress, adminFlag] = await Promise.all([ // three reads in parallel
         fetchWords(),
         fetchProgress(uid),
         isAdmin(uid),
@@ -100,6 +100,7 @@ function Study() {
       )}
 
       {current ? (
+        // A new key mounts a fresh Flashcard, so every card starts unflipped.
         <Flashcard key={`${current.id}-${reviewed}`} word={current} onAnswer={answer} />
       ) : (
         <div className="panel">

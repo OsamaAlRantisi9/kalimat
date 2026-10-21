@@ -27,7 +27,7 @@
     position: relative;
     display: block;
     height: 100%;
-    transform-style: preserve-3d;
+    transform-style: preserve-3d; // both faces stay in 3D space with this layer
     transition: transform 0.5s ease;
   }
 
@@ -43,7 +43,7 @@
   }
 
   &__face--back {
-    transform: rotateY(180deg);
+    transform: rotateY(180deg); // starts turned away; the flip brings it to the front
     background: var(--accent);
     color: var(--on-accent);
   }

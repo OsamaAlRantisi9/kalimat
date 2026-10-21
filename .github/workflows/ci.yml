@@ -1,3 +1,4 @@
+# On every push to main and every pull request: install, run the tests, then build.
 name: CI
 
 on:

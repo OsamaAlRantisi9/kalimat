@@ -35,7 +35,7 @@ export function saveProgress(uid, wordId, { box, due }) {
   return setDoc(doc(db, 'users', uid, 'progress', wordId), {
     box,
     due,
-    updatedAt: serverTimestamp(),
+    updatedAt: serverTimestamp(), // the server clock; the rules check it
   });
 }
 

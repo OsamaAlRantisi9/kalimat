@@ -16,8 +16,8 @@ export const INTERVALS = {
 };
 
 export function nextReview(progress, knewIt, now = Date.now()) {
-  const currentBox = progress?.box ?? 1;
-  const box = knewIt ? Math.min(currentBox + 1, MAX_BOX) : 1;
+  const currentBox = progress?.box ?? 1; // a word with no progress yet starts in box 1
+  const box = knewIt ? Math.min(currentBox + 1, MAX_BOX) : 1; // got it: up one box; missed: box 1
   return { box, due: now + INTERVALS[box] };
 }
 

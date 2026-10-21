@@ -23,5 +23,5 @@
   gap: $space;
   padding: $space * 3;
   border-radius: $radius;
-  backface-visibility: hidden;
+  backface-visibility: hidden; // a face is invisible while it's turned away
 }

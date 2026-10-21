@@ -13,6 +13,8 @@ service cloud.firestore {
       return signedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
     }
 
+    // hasOnly: no extra fields can sneak in. Types and sizes are checked,
+    // and createdAt must be the server time, so nobody can fake it.
     function validWord(word) {
       return word.keys().hasOnly(['ar', 'translit', 'en', 'dialect', 'createdAt'])
         && word.ar is string && word.ar.size() > 0 && word.ar.size() <= 60
@@ -29,17 +31,20 @@ service cloud.firestore {
         && progress.updatedAt == request.time;
     }
 
+    // Everyone can read words; only admins can change them.
     match /words/{wordId} {
       allow read: if true;
       allow create, update: if isAdmin() && validWord(request.resource.data);
       allow delete: if isAdmin();
     }
 
+    // Nobody can make themselves an admin from the app.
     match /admins/{uid} {
       allow read: if signedIn() && request.auth.uid == uid;
       allow write: if false;
     }
 
+    // Each learner reads and writes only their own progress.
     match /users/{uid}/progress/{wordId} {
       allow read, delete: if signedIn() && request.auth.uid == uid;
       allow create, update: if signedIn() && request.auth.uid == uid && validProgress(request.resource.data);

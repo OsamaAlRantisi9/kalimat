@@ -21,8 +21,8 @@ export default function Flashcard({ word, onAnswer }) {
       }
     }
     window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
-  }, [flipped, onAnswer]);
+    return () => window.removeEventListener('keydown', onKeyDown); // cleanup
+  }, [flipped, onAnswer]); // re-subscribe, so the handler never reads an old flipped (stale closure)
 
   function speak() {
     const utterance = new SpeechSynthesisUtterance(word.ar);
