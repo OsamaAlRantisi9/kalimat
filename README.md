@@ -10,7 +10,7 @@ Built with **React**, **Vite**, **SASS** and **Firebase** (Authentication, Cloud
 
 - Flip cards: the Arabic word (with tashkeel) on the front, transliteration and English meaning on the back.
 - Spaced repetition with Leitner boxes 1–5. A missed word comes back in the same session; a known word comes back after 1, 3, 7 and then 14 days.
-- Pronunciation through the browser's Arabic voice when one exists (for example Microsoft Edge, Android, iOS). The button is hidden where there is none.
+- Pronunciation is **switched off on purpose**. Browser voices read Arabic with the wrong vowels, which is worse than no audio for a learner. The code is kept behind a feature flag (`VITE_PRONUNCIATION=on`); the real fix is recordings by teachers saved with each word.
 - Keyboard support: Space flips the card, 1 = again, 2 = got it.
 - Anonymous sign-in, so each learner's progress is saved without a sign-up form.
 - An admin panel to add words or import a starter set, protected by Firestore security rules.

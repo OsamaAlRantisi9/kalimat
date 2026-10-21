@@ -55,7 +55,8 @@ export default function Flashcard({ word, onAnswer }) {
       </button>
 
       <div className="flashcard-actions">
-        {voice && (
+        {/* Off by default: browser voices get Arabic vowels wrong, which harms learners. */}
+        {import.meta.env.VITE_PRONUNCIATION === 'on' && voice && (
           <button type="button" className="btn btn--ghost" onClick={speak}>
             Listen
           </button>
